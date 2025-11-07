@@ -34,7 +34,7 @@ jobs:
           if npm run -s doc-check; then echo "doc checks passed"; else echo "doc checks failed"; exit 1; fi
 
       - name: Upload build artifact (PR and Push)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: docs-build
           path: ./build
@@ -46,7 +46,7 @@ jobs:
     if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: docs-build
 
@@ -72,7 +72,7 @@ jobs:
           if [ -f package.json ]; then npm run build; fi
 
       - name: Upload preview artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: preview-site
           path: ./build
