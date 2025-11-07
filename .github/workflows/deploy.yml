@@ -39,6 +39,7 @@ jobs:
       - name: Build documentation
         run: mkdocs build
 
+      # 使用官方GitHub Pages部署方法
       # 设置页面环境
       - name: Setup Pages
         uses: actions/configure-pages@v5
