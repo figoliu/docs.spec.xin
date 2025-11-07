@@ -39,22 +39,9 @@ jobs:
       - name: Build documentation
         run: mkdocs build
 
-      # 部署到GitHub Pages
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./site
-          publish_branch: gh-pages
-          force_orphan: true
-          commit_message: "Deploy documentation: ${{ github.sha }}"
-
       # 设置页面环境
       - name: Setup Pages
         uses: actions/configure-pages@v5
-        with:
-          # 确保启用GitHub Pages，即使仓库尚未配置
-          enablement: true
 
       # 上传页面构件
       - name: Upload artifact
