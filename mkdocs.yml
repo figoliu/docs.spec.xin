@@ -1,0 +1,47 @@
+site_name: 静态文档站点
+
+# 站点配置
+site_description: 一个使用MkDocs构建的静态文档站点
+site_author: 开发团队
+site_url: http://localhost:8000
+
+# 主题配置
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - search.highlight
+    - search.suggest
+  palette:
+    primary: indigo
+    accent: indigo
+
+# 插件配置
+plugins:
+  - search
+  - mkdocstrings
+
+# 扩展配置
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.tabbed
+  - tables
+
+# 导航配置
+nav:
+  - 首页: index.md
+  - 使用指南: 
+    - guide/installation.md
+    - guide/quickstart.md
+    - guide/advanced.md
+  - API参考: 
+    - api/overview.md
+    - api/endpoints.md
+  - 示例: 
+    - examples/basic.md
+    - examples/advanced.md
+  - 关于: about.md
