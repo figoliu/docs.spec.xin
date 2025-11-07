@@ -1,0 +1,384 @@
+openapi: 3.0.3
+info:
+  title: 静态文档站点 API
+  description: 静态文档站点的 CI/CD 和版本管理 API
+  version: 1.0.0
+  contact:
+    name: 文档团队
+    email: docs@example.com
+
+servers:
+  - url: https://api.example.com
+    description: 生产环境 API
+
+paths:
+  /api/builds:
+    get:
+      summary: 获取构建列表
+      description: 获取最近的构建记录，支持分页和筛选
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 20
+            minimum: 1
+            maximum: 100
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - name: branch
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [queued, running, success, failed]
+      responses:
+        '200':
+          description: 构建列表
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total: { type: integer }
+                  builds: { type: array, items: { $ref: '#/components/schemas/Build' } }
+        '400':
+          description: 参数错误
+        '500':
+          description: 服务器错误
+    post:
+      summary: 触发新构建
+      description: 手动触发文档站点构建
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                branch: { type: string, required: true }
+                commit: { type: string }
+                force: { type: boolean, default: false }
+      responses:
+        '201':
+          description: 构建已触发
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Build' }
+        '400':
+          description: 参数错误
+        '409':
+          description: 构建已存在或正在进行中
+
+  /api/builds/{buildId}:
+    get:
+      summary: 获取构建详情
+      description: 获取指定构建的详细信息
+      parameters:
+        - name: buildId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: 构建详情
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Build' }
+        '404':
+          description: 构建不存在
+
+  /api/builds/{buildId}/logs:
+    get:
+      summary: 获取构建日志
+      description: 获取指定构建的日志内容
+      parameters:
+        - name: buildId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: 构建日志
+          content:
+            text/plain:
+              schema: { type: string }
+        '404':
+          description: 构建不存在
+
+  /api/previews:
+    get:
+      summary: 获取预览列表
+      description: 获取 PR 预览列表，支持过滤
+      parameters:
+        - name: prNumber
+          in: query
+          schema: { type: integer }
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, expired, deleted]
+      responses:
+        '200':
+          description: 预览列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Preview' }
+
+  /api/previews/{previewId}:
+    get:
+      summary: 获取预览详情
+      description: 获取指定预览的详细信息
+      parameters:
+        - name: previewId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: 预览详情
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Preview' }
+        '404':
+          description: 预览不存在
+    delete:
+      summary: 删除预览
+      description: 删除指定的预览部署
+      parameters:
+        - name: previewId
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '204':
+          description: 预览已删除
+        '404':
+          description: 预览不存在
+
+  /api/versions:
+    get:
+      summary: 获取版本列表
+      description: 获取文档站点的版本列表
+      parameters:
+        - name: includeAll
+          in: query
+          schema: { type: boolean, default: false }
+      responses:
+        '200':
+          description: 版本列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Version' }
+    post:
+      summary: 创建新版本
+      description: 从成功的构建创建新版本
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                buildId: { type: string, required: true }
+                tag: { type: string, required: true, pattern: '^v\\d+\\.\\d+\\.\\d+.*$' }
+                description: { type: string }
+                isDefault: { type: boolean, default: false }
+      responses:
+        '201':
+          description: 版本已创建
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Version' }
+        '400':
+          description: 参数错误
+        '404':
+          description: 构建不存在或未成功
+
+  /api/versions/{versionTag}:
+    get:
+      summary: 获取版本详情
+      description: 获取指定版本的详细信息
+      parameters:
+        - name: versionTag
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: 版本详情
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Version' }
+        '404':
+          description: 版本不存在
+    put:
+      summary: 更新版本
+      description: 更新版本信息，如描述、默认状态等
+      parameters:
+        - name: versionTag
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description: { type: string }
+                isDefault: { type: boolean }
+      responses:
+        '200':
+          description: 版本已更新
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Version' }
+        '400':
+          description: 参数错误
+        '404':
+          description: 版本不存在
+
+  /api/versions/{versionTag}/rollback:
+    post:
+      summary: 回滚到指定版本
+      description: 将主站点回滚到指定的历史版本
+      parameters:
+        - name: versionTag
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason: { type: string, required: true }
+                operator: { type: string, required: true }
+      responses:
+        '200':
+          description: 回滚成功
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Build' }
+        '404':
+          description: 版本不存在
+
+  /api/documents/search:
+    get:
+      summary: 搜索文档
+      description: 根据关键词搜索文档内容
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema: { type: string }
+        - name: version
+          in: query
+          schema: { type: string }
+        - name: limit
+          in: query
+          schema: { type: integer, default: 10, minimum: 1, maximum: 50 }
+      responses:
+        '200':
+          description: 搜索结果
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  query: { type: string }
+                  results: { type: array, items: { $ref: '#/components/schemas/DocumentSearchResult' } }
+
+components:
+  schemas:
+    Build:
+      type: object
+      properties:
+        id: { type: string, description: '构建ID' }
+        branch: { type: string, description: '触发构建的分支' }
+        commit: { type: string, description: '触发构建的提交哈希' }
+        status: { type: string, enum: [queued, running, success, failed], description: '构建状态' }
+        startedAt: { type: string, format: date-time, description: '构建开始时间' }
+        finishedAt: { type: string, format: date-time, description: '构建结束时间' }
+        logsUrl: { type: string, description: '构建日志URL' }
+        deployedUrl: { type: string, description: '部署后的站点URL' }
+        errorDetails: { type: string, description: '错误详情' }
+      required: [id, branch, commit, status]
+
+    Preview:
+      type: object
+      properties:
+        id: { type: string, description: '预览ID' }
+        previewUrl: { type: string, description: '预览站点URL' }
+        prNumber: { type: integer, description: '关联的PR编号' }
+        buildId: { type: string, description: '关联的构建ID' }
+        createdAt: { type: string, format: date-time, description: '预览创建时间' }
+        expiresAt: { type: string, format: date-time, description: '预览过期时间' }
+        status: { type: string, enum: [active, expired, deleted], description: '预览状态' }
+      required: [id, previewUrl, prNumber, buildId, createdAt, expiresAt, status]
+
+    Version:
+      type: object
+      properties:
+        tag: { type: string, description: '版本标签' }
+        releaseDate: { type: string, format: date-time, description: '发布日期' }
+        buildId: { type: string, description: '关联的构建ID' }
+        description: { type: string, description: '版本描述' }
+        isLatest: { type: boolean, description: '是否为最新版本' }
+        isDefault: { type: boolean, description: '是否为默认版本' }
+      required: [tag, releaseDate, buildId]
+
+    DocumentSearchResult:
+      type: object
+      properties:
+        path: { type: string, description: '文档路径' }
+        title: { type: string, description: '文档标题' }
+        version: { type: string, description: '文档版本' }
+        url: { type: string, description: '文档URL' }
+        snippet: { type: string, description: '匹配内容摘要' }
+        score: { type: number, description: '匹配得分' }
+      required: [path, title, version, url]
+
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+    OAuth2:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://auth.example.com/oauth2/authorize
+          scopes:
+            read:builds: 读取构建信息
+            write:builds: 触发构建
+            read:previews: 读取预览信息
+            write:previews: 管理预览
+            read:versions: 读取版本信息
+            write:versions: 管理版本
+
+tags:
+  - name: builds
+    description: 构建相关操作
+  - name: previews
+    description: PR预览相关操作
+  - name: versions
+    description: 版本管理相关操作
+  - name: documents
+    description: 文档查询相关操作
