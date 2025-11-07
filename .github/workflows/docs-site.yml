@@ -1,0 +1,86 @@
+name: Docs Site CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+
+jobs:
+  build:
+    name: Build & Quality Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then npm ci; fi
+
+      - name: Build site
+        run: |
+          # 修改以下命令以匹配你的静态站点构建命令 (e.g. npm run build, mkdocs build)
+          if [ -f package.json ]; then npm run build; fi
+
+      - name: Run doc quality checks
+        run: |
+          # 示例：你可以在 package.json 中封装 link-check / spell / vale
+          if npm run -s doc-check; then echo "doc checks passed"; else echo "doc checks failed"; exit 1; fi
+
+      - name: Upload build artifact (PR and Push)
+        uses: actions/upload-artifact@v3
+        with:
+          name: docs-build
+          path: ./build
+
+  deploy-pages:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: docs-build
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v1
+
+  pr-preview:
+    name: PR Preview (artifact)
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install & Build
+        run: |
+          if [ -f package-lock.json ]; then npm ci; fi
+          if [ -f package.json ]; then npm run build; fi
+
+      - name: Upload preview artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: preview-site
+          path: ./build
+
+      - name: Post PR comment with preview instructions
+        uses: peter-evans/comment@v2
+        with:
+          message: |
+            Docs preview artifact built. To publish a browseable preview URL please either:
+            - Configure Netlify/Vercel to auto-deploy PR builds, or
+            - Use a gh-pages preview publish action (e.g. peaceiris/actions-gh-pages) and a PR-specific path.
