@@ -9,7 +9,7 @@ description: "静态文档网站功能实现任务列表"
 
 **组织结构**: 任务按用户故事分组, 以便每个故事能够独立实施和测试.
 
-## 格式: `[ID] [P?] [Story] 描述`
+## 格式: `[ID] [P] [Story] 描述`
 - **[P]**: 可以并行运行(不同文件, 无依赖关系)
 - **[Story]**: 此任务属于哪个用户故事(例如: US1、US2、US3)
 - 在描述中包含确切的文件路径
@@ -58,7 +58,7 @@ description: "静态文档网站功能实现任务列表"
 - [ ] T010 [US1] 创建 .github/workflows/deploy-docs.yml 工作流文件，配置主分支构建和部署
 - [ ] T011 [P] [US1] 创建 docs/guide/getting-started.md 示例文档
 - [ ] T012 [P] [US1] 创建 docs/guide/advanced.md 示例文档
-- [ ] T013 [US1] 配置 GitHub Actions 缓存策略以优化构建时间
+- [ ] T013 [US1] [FR-010] 配置 GitHub Actions 缓存策略以优化构建时间
 - [ ] T014 [US1] 在部署工作流中添加构建状态通知
 
 **检查点**: 此时, 用户故事 1 应该完全功能化且可独立测试
@@ -75,8 +75,8 @@ description: "静态文档网站功能实现任务列表"
 
 - [ ] T015 [US2] 创建 .github/workflows/preview-docs.yml 工作流文件，配置 PR 预览
 - [ ] T016 [P] [US2] 创建 scripts/check-links.py 链接检查脚本
-- [ ] T017 [P] [US2] 创建 scripts/check-chinese.py 中文合规性检查脚本
-- [ ] T018 [US2] 在 PR 工作流中添加文档质量检查步骤
+- [ ] T017 [P] [US2] [FR-006] 创建 scripts/check-chinese.py 中文合规性检查脚本
+- [ ] T018 [US2] [FR-011] 在 PR 工作流中添加文档质量检查步骤
 - [ ] T019 [US2] 配置 PR 注释自动添加预览链接
 - [ ] T020 [US2] 设置预览环境自动过期策略
 
@@ -108,9 +108,10 @@ description: "静态文档网站功能实现任务列表"
 
 - [ ] T026 [P] 更新 README.md，添加项目说明和使用指南
 - [ ] T027 [P] 优化站点性能，配置资源压缩和缓存
-- [ ] T028 [P] 配置全文搜索功能和索引优化
-- [ ] T029 完善错误处理和日志记录
-- [ ] T030 运行 quickstart.md 中的所有步骤进行验证
+- [ ] T028 [P] [FR-007] 配置全文搜索功能和索引优化
+- [ ] T032 [FR-005] 创建 implementation-notes.md 中的访问控制配置说明文档
+- [ ] T029 [FR-008] 完善错误处理和日志记录
+- [ ] T030 [US1] [FR-009] 运行 quickstart.md 中的所有步骤进行验证，确保部署说明正确
 - [ ] T031 文档结构优化和内容审查
 
 ---
