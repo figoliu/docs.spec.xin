@@ -52,6 +52,9 @@ jobs:
       # 设置页面环境
       - name: Setup Pages
         uses: actions/configure-pages@v5
+        with:
+          # 确保启用GitHub Pages，即使仓库尚未配置
+          enablement: true
 
       # 上传页面构件
       - name: Upload artifact
