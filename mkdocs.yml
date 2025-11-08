@@ -1,9 +1,9 @@
-site_name: 静态文档站点
+site_name: Speckit中文网
 
 # 站点配置
-site_description: 一个使用MkDocs构建的静态文档站点
-site_author: 开发团队
-site_url: http://localhost:8000
+site_description: Speckit项目中文文档，Spec-kit中文优化，SDD相关案例分享。
+site_author: Figo
+site_url: http://spec.xin
 
 # 主题配置
 theme:
@@ -35,13 +35,16 @@ markdown_extensions:
 nav:
   - 首页: index.md
   - 使用指南: 
-    - guide/installation.md
-    - guide/quickstart.md
-    - guide/advanced.md
-  - API参考: 
-    - api/overview.md
-    - api/endpoints.md
+    - guide/Trae.md
+    - guide/VSCode.md
+    - guide/CodeBuddy.md
+    - guide/QCoder.md
+  - SDD: 
+    - SDD/SDD宣言.md
+    - SDD/Openspec.md
   - 示例: 
-    - examples/basic.md
-    - examples/advanced.md
+    - examples/web应用.md
+    - examples/Android应用.md
+    - examples/iOS应用.md
+    - examples/桌面应用.md
   - 关于: about.md
