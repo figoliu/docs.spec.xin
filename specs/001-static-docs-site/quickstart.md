@@ -163,43 +163,56 @@ mike set-default v0.9.0 --push
 ### mkdocs.yml 主要配置
 
 ```yaml
-site_name: 文档站点名称
-site_description: 站点描述
-site_author: 作者名称
+site_name: Speckit中文网
 
+# 站点配置
+site_description: Speckit项目中文文档，Spec-kit中文优化，SDD相关案例分享。
+site_author: Figo
+site_url: https://docs.spec.xin
+
+# 主题配置
 theme:
   name: material
-  language: zh
   features:
     - navigation.tabs
     - navigation.sections
-    - content.code.annotate
+    - navigation.expand
+    - search.highlight
+    - search.suggest
   palette:
-    - scheme: default
-      primary: indigo
-      accent: indigo
+    primary: indigo
+    accent: indigo
 
+# 插件配置
 plugins:
   - search
-  - mike:
-      canonical_version: main
+  - mkdocstrings
 
+# 扩展配置
 markdown_extensions:
   - admonition
-  - toc:
-      permalink: true
   - pymdownx.highlight
   - pymdownx.superfences
   - pymdownx.tabbed
+  - tables
 
+# 导航配置
 nav:
   - 首页: index.md
-  - 指南: 
-    - 快速入门: guide/quickstart.md
-    - 高级配置: guide/advanced.md
-  - 参考: 
-    - API: reference/api.md
-    - 命令行: reference/cli.md
+  - 使用指南: 
+    - guide/Trae.md
+    - guide/VSCode.md
+    - guide/CodeBuddy.md
+    - guide/QCoder.md
+  - SDD: 
+    - SDD/SDD宣言.md
+    - SDD/Openspec.md
+  - 示例: 
+    - examples/web应用.md
+    - examples/Android应用.md
+    - examples/iOS应用.md
+    - examples/桌面应用.md
+  - 关于: about.md
 ```
 
 ## 最佳实践
