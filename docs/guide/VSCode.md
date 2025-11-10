@@ -46,6 +46,7 @@ uv tool install specify-cn-cli --force --from git+https://github.com/figoliu/spe
 specify-cn init vsproject1
 ```
 vsproject1是你的项目名称。
+
 ![alt text](image.png)
 
 Specify默认支持Copilot。选择Copilot，按Enter键确认。
@@ -68,10 +69,13 @@ git init
 ## 使用Trae进行SDD开发
 
 打开VSCode，选择Open Folder，选择vsproject1文件夹，即可打开项目。
+
 ![alt text](image-7.png)
+
 在项目的资源管理器中看到这两个文件夹，表示项目准备就绪，可以开始进行SDD开发。
 
 在VSCode右侧的AI交互区域，输入想要进行的SDD步骤，即可进行SDD开发。
+
 ![alt text](image-5.png)
 
 注意VSCode中与AI交互需要输入#号，本例中输入#speckit.constitution，即可生成项目章程。

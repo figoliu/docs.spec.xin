@@ -49,6 +49,7 @@ myproject是你的项目名称。
 
 Specify默认没有Trae的支持，可以选择Roo，也可以选择claud。（其他选项可以支持）按Enter键确认。
 然后选择使用的脚本类型，一般Windows上选择PS（PowerShell），Linux上选择Bash。按Enter键确认。
+
 ![alt text](image-1.png)
 
 项目会自动开始初始化，初始化完成后，会在当前目录下创建一个名为myproject的文件夹，里面包含了项目的所有文件。
