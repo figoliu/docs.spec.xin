@@ -55,10 +55,12 @@ curl -qL https://www.npmjs.com/install.sh | sh
 specify-cn init cbproject1
 ```
 cbproject1是你的项目名称。
+
 ![alt text](image-8.png)
 
 Specify默认支持CodeBuddy的支持，按Enter键确认。
 然后选择使用的脚本类型，一般Windows上选择PS（PowerShell），Linux上选择Bash。按Enter键确认。
+
 ![alt text](image-1.png)
 
 项目会自动开始初始化，初始化完成后，会在当前目录下创建一个名为cbproject1的文件夹，里面包含了项目的所有文件。
@@ -77,10 +79,13 @@ git init
 ## 使用CodeBuddy进行SDD开发
 
 打开CodeBuddy，选择Open Folder，选择cbproject1文件夹，即可打开项目。
+
 ![alt text](image-11.png)
+
 在项目的资源管理器中看到这两个文件夹，表示项目准备就绪，可以开始进行SDD开发。
 
 在CodeBuddy右侧的AI交互区域，输入想要进行的SDD步骤，即可进行SDD开发。
+
 ![alt text](image-10.png)
 
 注意CodeBuddy中与AI交互需要输入"/"号，本例中输入"/speckit.constitution"，即可生成项目章程。

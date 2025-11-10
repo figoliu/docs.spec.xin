@@ -57,7 +57,7 @@ specify-cn init qcproject1
 qcproject1是你的项目名称。
 ![alt text](image-12.png)
 
-Specify默认支持qwen-code的支持，按Enter键确认。
+Specify默认支持qwen-code，按Enter键确认。
 然后选择使用的脚本类型，一般Windows上选择PS（PowerShell），Linux上选择Bash。按Enter键确认。
 ![alt text](image-1.png)
 
@@ -78,9 +78,11 @@ git init
 
 打开qwen-code，选择Open Folder，选择qcproject1文件夹，即可打开项目。
 ![alt text](image-14.png)
+
 在项目的资源管理器中看到这两个文件夹，表示项目准备就绪，可以开始进行SDD开发。
 
 在qwen-code右侧的AI交互区域，输入想要进行的SDD步骤，即可进行SDD开发。
+
 ![alt text](image-15.png)
 
 注意qwen-code中与AI交互需要输入"@"号，本例中输入"@speckit.constitution.toml"，即可生成项目章程。
