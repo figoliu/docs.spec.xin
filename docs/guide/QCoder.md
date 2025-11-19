@@ -40,7 +40,7 @@ uv tool install specify-cn-cli --force --from git+https://gitcode.com/favornwpu/
 uv tool install specify-cn-cli --force --from git+https://github.com/figoliu/spec.xin.git
 ```
 ## 初始化项目
-先安装CodeBuddy的CLI工具，必须安装，否则不能使用CodeBuddy的功能。
+先安装qwen-code的CLI工具，必须安装，否则不能使用qwen-code的功能。
 
 ```
 npm install -g @qwen-code/qwen-code@latest

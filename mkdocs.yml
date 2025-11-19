@@ -44,7 +44,10 @@ nav:
     - SDD/Openspec.md
   - 示例: 
     - examples/web应用.md
-    - examples/Android应用.md
+    - examples/快速开发WEB应用最佳实践.md
     - examples/iOS应用.md
     - examples/桌面应用.md
+  - 第三方服务:
+    - vendor/Supabase.md
+    - vendor/Figma.md
   - 关于: about.md
