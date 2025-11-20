@@ -1,7 +1,7 @@
 site_name: Speckit中文网
 
 # 站点配置
-site_description: Speckit项目中文文档，Spec-kit中文优化，SDD相关案例分享。
+site_description: Speckit项目中文文档，Spec-kit中文优化，SDD相关案例分享，Speckit中文网。
 site_author: Figo
 site_url: http://spec.xin
 
@@ -44,7 +44,7 @@ nav:
     - SDD/Openspec.md
   - 示例: 
     - examples/web应用.md
-    - examples/快速开发WEB应用最佳实践.md
+    - examples/两天完成一个数字资产交易系统.md
     - examples/iOS应用.md
     - examples/桌面应用.md
   - 第三方服务:
