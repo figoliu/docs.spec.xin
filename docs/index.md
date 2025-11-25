@@ -1,6 +1,6 @@
 <div align="center">
-    <h1>🌱 Spec.xin -- Spec Kit 中文优化版</h1>
-    <h3><em>使用speckit更快地构建高质量软件,中文用户可以使用spec.xin</em></h3>
+    <h1>🌱 <a href="http://www.spec.xin" target="_blank">Spec.xin</a> -- Spec Kit 中文优化版</h1>
+    <h3><em>使用speckit更快地构建高质量软件,中文用户可以使用<a href="http://www.spec.xin" target="_blank">spec.xin</a></em></h3>
 </div>
 
 <p align="center">
