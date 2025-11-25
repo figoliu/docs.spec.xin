@@ -3,7 +3,7 @@ site_name: Speckit中文网
 # 站点配置
 site_description: Speckit项目中文文档，Spec-kit中文优化，SDD相关案例分享，Speckit中文网。
 site_author: Figo
-site_url: http://spec.xin
+site_url: http://www.spec.xin
 
 # 主题配置
 theme:
